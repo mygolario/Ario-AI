@@ -4,10 +4,10 @@ const globalForPrisma = global as unknown as {
   prisma?: PrismaClient;
 };
 
-const prisma =
+export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: ["error", "warn"],
+    log: ["warn", "error"],
   });
 
 if (process.env.NODE_ENV !== "production") {
@@ -15,5 +15,4 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export default prisma;
-export { prisma };
 

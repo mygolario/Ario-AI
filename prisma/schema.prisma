@@ -14,14 +14,14 @@ generator client {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String    @id @default(cuid())
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   telegramId String? @unique
   email      String? @unique
 
-  messages Message[]
+  messages   Message[]
 }
 
 enum MessageRole {
@@ -35,14 +35,14 @@ enum MessageChannel {
 }
 
 model Message {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
+  id        String         @id @default(cuid())
+  createdAt DateTime       @default(now())
 
-  user   User   @relation(fields: [userId], references: [id])
-  userId String
+  user      User           @relation(fields: [userId], references: [id])
+  userId    String
 
-  role    MessageRole
-  channel MessageChannel
+  role      MessageRole
+  channel   MessageChannel
 
-  content String
+  content   String
 }
