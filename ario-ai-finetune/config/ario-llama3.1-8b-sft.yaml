@@ -1,0 +1,43 @@
+base_model: meta-llama/Meta-Llama-3.1-8B-Instruct
+chat_template: llama-3
+tokenizer_type: AutoTokenizer
+
+datasets:
+  - path: ./dataset/train.jsonl
+    type: chatml
+    field_messages: messages
+
+val_set_size: 0
+
+output_dir: ./checkpoints/ario-llama3.1-8b-sft
+sequence_len: 4096
+micro_batch_size: 4
+gradient_accumulation_steps: 32
+num_epochs: 2
+learning_rate: 1.0e-4
+lr_scheduler: cosine
+warmup_steps: 100
+optimizer: adamw_torch
+weight_decay: 0.01
+logging_steps: 10
+
+adapter: qlora
+lora_r: 16
+lora_alpha: 32
+lora_dropout: 0.05
+target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+
+load_in_4bit: true
+bnb_4bit_use_double_quant: true
+bnb_4bit_quant_type: nf4
+bnb_4bit_compute_dtype: bfloat16
+
+bf16: true
+gradient_checkpointing: true

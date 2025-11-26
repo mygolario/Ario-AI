@@ -1,0 +1,9 @@
+checkpoints/
+*.pt
+*.bin
+*.safetensors
+wandb/
+.cache/
+*.log
+*.tmp
+tmp/
