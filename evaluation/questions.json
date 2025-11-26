@@ -1,0 +1,37 @@
+[
+  { "category": "startup", "question": "چطور MVP یک پلتفرم رزرو خدمات در ایران را طراحی کنم؟" },
+  { "category": "startup", "question": "برای یک اپ سفارش غذا چه مدل درآمدی پیشنهاد می‌دهی؟" },
+  { "category": "startup", "question": "برای جذب سرمایه اولیه در ایران چه مراحلی را پیشنهاد می‌کنی؟" },
+  { "category": "startup", "question": "چطور بازار هدف یک سرویس لجستیک شهری را در ایران تخمین بزنم؟" },
+  { "category": "startup", "question": "چه فازبندی برای ساخت یک مارکت‌پلیس خدمات خانگی پیشنهاد می‌دهی؟" },
+
+  { "category": "tech", "question": "چطور یک API روت در Next.js ۱۴ بنویسم که از Prisma استفاده کند؟" },
+  { "category": "tech", "question": "چطور معماری بک‌اند مقیاس‌پذیر برای یک SaaS طراحی کنم؟" },
+  { "category": "tech", "question": "بهترین الگو برای مدیریت secrets در یک اپ Node/Next چیست؟" },
+  { "category": "tech", "question": "نمونه‌ای از کوئری پیچیده Prisma با join بین دو مدل بده." },
+  { "category": "tech", "question": "چطور یک Workflow CI/CD ساده برای Next.js روی Vercel یا Docker بنویسم؟" },
+
+  { "category": "marketing", "question": "یک استراتژی رشد ۳۰ روزه برای اینستاگرام بده." },
+  { "category": "marketing", "question": "چطور CTA مناسب برای پیج آموزشی انتخاب کنم؟" },
+  { "category": "marketing", "question": "برای تبلیغات بنری در سایت‌های ایرانی چه نکاتی را رعایت کنم؟" },
+  { "category": "marketing", "question": "یک برنامه محتوایی هفتگی برای یک پیج فین‌تک در ایران بده." },
+  { "category": "marketing", "question": "چطور نرخ تبدیل لندینگ پیج را در بازار ایران افزایش دهم؟" },
+
+  { "category": "business", "question": "تحلیل SWOT یک فروشگاه دیجیتال در ایران را بده." },
+  { "category": "business", "question": "مزیت رقابتی یک فروشگاه لوازم دیجیتال چیست؟" },
+  { "category": "business", "question": "چه شاخص‌هایی را برای اندازه‌گیری سلامت مالی یک استارتاپ دنبال کنم؟" },
+  { "category": "business", "question": "چطور رقبا را برای یک اپ اشتراک محتوای آموزشی تحلیل کنم؟" },
+  { "category": "business", "question": "یک فریم‌ورک سریع برای ارزیابی فرصت‌های بازار در ایران معرفی کن." },
+
+  { "category": "content", "question": "برایم یک ساختار مقاله حرفه‌ای در مورد هوش مصنوعی بنویس." },
+  { "category": "content", "question": "یک پاراگراف درباره مزایای Next.js بنویس." },
+  { "category": "content", "question": "متنی ۲۰۰ کلمه‌ای درباره آینده فین‌تک در ایران بنویس." },
+  { "category": "content", "question": "یک اسکریپت کوتاه برای ویدئوی ۶۰ ثانیه‌ای معرفی محصول بنویس." },
+  { "category": "content", "question": "چطور یک خلاصه اجرایی جذاب برای گزارش بازار تهیه کنم؟" },
+
+  { "category": "general", "question": "بهترین عادت‌های روزانه برای افزایش بهره‌وری چیست؟" },
+  { "category": "general", "question": "چطور برنامه‌ریزی هفتگی مؤثر داشته باشم؟" },
+  { "category": "general", "question": "نکات کلیدی برای مدیریت زمان در کارهای تیمی چیست؟" },
+  { "category": "general", "question": "چطور مهارت حل مسئله را تقویت کنم؟" },
+  { "category": "general", "question": "بهترین روش برای یادگیری سریع یک مهارت جدید چیست؟" }
+]

@@ -1,8 +1,11 @@
-export interface ChatRequestBody {
+export type ChatRequestBody = {
   message: string;
-}
+  conversationId?: string | null;
+  clientId?: string | null;
+};
 
-export interface ChatResponseBody {
+export type ChatResponseBody = {
   reply: string;
-}
+  conversationId: string;
+};
 

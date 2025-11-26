@@ -4,15 +4,90 @@
   padding: 2rem 1rem 3rem;
 }
 
-.panel {
+.layout {
   margin: 0 auto;
-  width: min(960px, 100%);
+  width: min(1200px, 100%);
+  display: flex;
+  gap: 1.25rem;
+}
+
+.sidebar {
+  width: 270px;
+  background: #0f172a;
+  color: #e2e8f0;
+  border-radius: 18px;
+  padding: 1.25rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.sidebarTitle {
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 0 0 0.25rem;
+}
+
+.conversationList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.conversationItem,
+.conversationItemActive {
+  padding: 0.75rem 0.85rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.15s ease;
+  border: 1px solid rgba(226, 232, 240, 0.08);
+}
+
+.conversationItem:hover {
+  background: rgba(148, 163, 184, 0.08);
+}
+
+.conversationItemActive {
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.35);
+}
+
+.conversationTitle {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #e2e8f0;
+}
+
+.conversationDate {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-top: 0.2rem;
+}
+
+.conversationEmpty {
+  padding: 0.75rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.chatArea {
+  flex: 1;
+  min-width: 0;
+}
+
+.panel {
+  width: 100%;
   min-height: calc(100vh - 4rem);
   background: #ffffff;
   border-radius: 24px;
   box-shadow: 0 25px 80px rgba(15, 23, 42, 0.25);
   display: flex;
   flex-direction: column;
+  direction: rtl;
 }
 
 .header {
@@ -49,6 +124,35 @@
   font-weight: 600;
   font-size: 0.9rem;
 }
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.newChatButton {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(248, 250, 252, 0.8);
+  color: #0f172a;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease, opacity 0.2s ease;
+}
+
+.newChatButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .newChatButton:not(:disabled):hover {
+    background: #ffffff;
+    transform: translateY(-1px);
+  }
+}
 
 .messages {
   flex: 1;
@@ -58,6 +162,8 @@
   gap: 1rem;
   overflow-y: auto;
   background: #f8fafc;
+  direction: rtl;
+  scroll-behavior: smooth;
 }
 
 .message {
@@ -156,6 +262,17 @@
   .panel {
     border-radius: 0;
     min-height: 100vh;
+  }
+
+  .layout {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: none;
+    padding: 1rem 1.25rem;
   }
 
   .messages {

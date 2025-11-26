@@ -8,7 +8,11 @@
     "start": "next start",
     "lint": "eslint . --max-warnings=0",
     "format": "prettier --write .",
-    "migrate": "dotenv -o -e .env.migrate -- npx prisma migrate dev --name init"
+    "migrate": "dotenv -o -e .env.migrate -- npx prisma migrate dev --name init",
+    "export:finetune": "ts-node scripts/export-finetune-dataset.ts",
+    "eval:run": "ts-node scripts/run-evaluation.ts",
+    "eval:score": "ts-node scripts/score-evaluation.ts",
+    "clean:finetune": "ts-node scripts/clean-finetune-dataset.ts"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
@@ -28,6 +32,7 @@
     "eslint-config-next": "16.0.4",
     "eslint-config-prettier": "^10.1.8",
     "prettier": "^3.6.2",
-    "typescript": "^5"
+    "typescript": "^5",
+    "ts-node": "^10.9.2"
   }
 }

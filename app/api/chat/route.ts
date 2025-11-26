@@ -14,13 +14,18 @@ export async function POST(request: Request) {
       );
     }
 
-    const { reply } = await handleUserMessage({
-      userIdentifier: {},
+    const { reply, conversationId } = await handleUserMessage({
+      userIdentifier: {
+        clientId: payload.clientId ?? undefined,
+      },
       channel: "WEB",
       message,
+      conversationId: payload.conversationId ?? null,
     });
 
-    return NextResponse.json<ChatResponseBody>({ reply });
+    const body: ChatResponseBody = { reply, conversationId };
+
+    return NextResponse.json(body);
   } catch (error) {
     console.error("[api/chat] failed", error);
     return NextResponse.json(
