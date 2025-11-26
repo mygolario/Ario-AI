@@ -258,6 +258,11 @@
   font-size: 0.9rem;
 }
 
+.typing {
+  opacity: 0.7;
+  font-style: italic;
+}
+
 @media (max-width: 700px) {
   .panel {
     border-radius: 0;

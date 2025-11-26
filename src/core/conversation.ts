@@ -73,6 +73,8 @@ const upsertUser = async (identifier: HandleUserMessageParams["userIdentifier"])
   return prisma.user.create({ data: { clientId: generateClientId() } });
 };
 
+const SYSTEM_PROMPT = `You are Ario AI, a helpful Persian AI assistant designed for Iranian users. You provide friendly, accurate, and culturally-aware responses in Persian (Farsi). You help with daily life questions, cultural information, and general assistance. Always respond in Persian unless the user explicitly asks in another language.`;
+
 export async function handleUserMessage(
   params: HandleUserMessageParams,
 ): Promise<{ reply: string; conversationId: string }> {
@@ -81,6 +83,8 @@ export async function handleUserMessage(
   if (!trimmedMessage) {
     throw new Error("Message cannot be empty");
   }
+
+  console.log(`[conversation] Handling message (channel: ${params.channel}, length: ${trimmedMessage.length})`);
 
   const user = await upsertUser(params.userIdentifier);
 

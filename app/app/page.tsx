@@ -43,7 +43,6 @@ const ui = {
 };
 
 export default function ChatPage() {
-  // Local-only state for MVP; will be replaced by persisted conversation later.
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [conversationId, setConversationId] = useState<string | null>(null);
   const [clientId, setClientId] = useState<string | null>(null);
@@ -156,7 +155,7 @@ export default function ChatPage() {
   const handleSend = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const trimmed = prompt.trim();
-    if (!trimmed || isSending) {
+    if (!trimmed || isSending || isLoadingHistory) {
       return;
     }
     if (!clientId) {
@@ -191,7 +190,8 @@ export default function ChatPage() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to contact assistant");
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || "Failed to contact assistant");
       }
 
       const data = (await response.json()) as ChatResponseBody;
@@ -208,6 +208,8 @@ export default function ChatPage() {
     } catch (err) {
       console.error(err);
       setError(ui.genericError);
+      // Remove the user message on error so they can retry
+      setMessages((prev) => prev.filter((msg) => msg.id !== userMessage.id));
     } finally {
       setIsSending(false);
     }
@@ -296,7 +298,7 @@ export default function ChatPage() {
               value={prompt}
               onChange={(event) => setPrompt(event.target.value)}
               dir="auto"
-              aria-label="\u067e\u06cc\u0627\u0645 \u06a9\u0627\u0631\u0628\u0631"
+              aria-label="پیام کاربر"
               disabled={isSending}
             />
             <div className={styles.actions}>
