@@ -72,12 +72,17 @@ async function main() {
 
     try {
       const parsed = JSON.parse(reply);
+      const normalizeScore = (value: unknown): number | null => {
+        if (value === undefined || value === null) return null;
+        const num = Number(value);
+        return Number.isFinite(num) ? num : null;
+      };
       parsedScores = {
-        accuracy: Number(parsed.accuracy) || null,
-        structure: Number(parsed.structure) || null,
-        conciseness: Number(parsed.conciseness) || null,
-        iran_practicality: Number(parsed.iran_practicality) || null,
-        depth: Number(parsed.depth) || null,
+        accuracy: normalizeScore(parsed.accuracy),
+        structure: normalizeScore(parsed.structure),
+        conciseness: normalizeScore(parsed.conciseness),
+        iran_practicality: normalizeScore(parsed.iran_practicality),
+        depth: normalizeScore(parsed.depth),
       };
     } catch (error) {
       console.error("Failed to parse score JSON", error);

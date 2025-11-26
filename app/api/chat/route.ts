@@ -79,7 +79,7 @@ export async function POST(request: Request) {
     console.log(`[api/chat] Processing message (length: ${message.length}, tone: ${tone}, mode: ${responseMode})`);
 
     const sessionId = await getOrCreateSessionId();
-    const clientId = payload.clientId ?? undefined;
+    const clientId = payload.clientId ?? sessionId;
 
     const { reply, conversationId } = await handleUserMessage({
       userIdentifier: {

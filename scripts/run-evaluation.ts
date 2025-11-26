@@ -1,7 +1,5 @@
 import fs from "fs";
 import path from "path";
-import fetch from "node-fetch";
-
 type QuestionItem = { category: string; question: string };
 type ResultItem = { category: string; question: string; answer: string };
 
