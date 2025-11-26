@@ -1,6 +1,6 @@
 import { getEnv } from "./env";
 
-// Validate environment variables at module load time
+// Validate environment variables (lazy validation - only when called)
 // This will throw if required env vars are missing
 export function validateEnvironment() {
   try {
@@ -15,8 +15,6 @@ export function validateEnvironment() {
   }
 }
 
-// Auto-validate on import (for server-side code)
-if (typeof window === "undefined") {
-  validateEnvironment();
-}
+// Note: We don't auto-validate on import anymore to allow the app to start
+// even if env vars are missing. Validation happens lazily when LLM is called.
 

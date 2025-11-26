@@ -16,7 +16,7 @@ Ario AI is a Persian-first AI assistant designed for Iranian users. It provides 
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript
 - **Database**: PostgreSQL with Prisma ORM
-- **LLM Provider**: OpenRouter (default model: `deepseek/deepseek-r1:free`)
+- **LLM Provider**: OpenRouter (default model: `openai/gpt-4.1-mini`)
 - **Styling**: CSS Modules
 
 ## Getting Started
@@ -81,7 +81,7 @@ Ario AI is a Persian-first AI assistant designed for Iranian users. It provides 
 
 ### LLM Model
 
-The app uses OpenRouter with a default model of `deepseek/deepseek-r1:free` (free tier). You can change this by modifying `DEFAULT_MODEL` in `src/core/llm/client.ts`.
+The app uses OpenRouter with a default model of `openai/gpt-4.1-mini`. You can change this by modifying `DEFAULT_MODEL` in `src/core/llm/client.ts`.
 
 ## Project Structure
 

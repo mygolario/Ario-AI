@@ -130,6 +130,113 @@
   gap: 0.75rem;
 }
 
+.settingsIndicator {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.settingsLabel {
+  font-size: 0.85rem;
+  color: #64748b;
+  padding: 0.25rem 0.5rem;
+  background: rgba(248, 250, 252, 0.6);
+  border-radius: 8px;
+  font-weight: 500;
+}
+
+.settingsButton {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(248, 250, 252, 0.8);
+  color: #0f172a;
+  padding: 0.5rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.settingsButton:hover {
+  background: #ffffff;
+  transform: translateY(-1px);
+}
+
+.settingsPanel {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin: 1rem 2rem;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.1);
+}
+
+.settingsSection {
+  margin-bottom: 1.5rem;
+}
+
+.settingsSection > .settingsLabel {
+  display: block;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+  background: none;
+  padding: 0;
+}
+
+.radioGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.radioOption {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.radioOption:hover {
+  background: rgba(248, 250, 252, 0.8);
+}
+
+.radioOption input[type="radio"] {
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+
+.radioOption span {
+  font-size: 0.9rem;
+  color: #0f172a;
+}
+
+.closeSettingsButton {
+  border: 1px solid rgba(15, 23, 42, 0.12);
+  background: rgba(248, 250, 252, 0.8);
+  color: #0f172a;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.closeSettingsButton:hover {
+  background: #ffffff;
+}
+
 .newChatButton {
   border: 1px solid rgba(15, 23, 42, 0.12);
   background: rgba(248, 250, 252, 0.8);

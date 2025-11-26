@@ -7,8 +7,8 @@ import type { ChatRequestBody, ChatResponseBody } from "@/types/chat";
 
 const SESSION_COOKIE_NAME = "ario_session_id";
 
-function getOrCreateSessionId(): string {
-  const cookieStore = cookies();
+async function getOrCreateSessionId(): Promise<string> {
+  const cookieStore = await cookies();
   const existingSession = cookieStore.get(SESSION_COOKIE_NAME);
 
   if (existingSession?.value) {
@@ -65,9 +65,12 @@ export async function POST(request: Request) {
       );
     }
 
-    console.log(`[api/chat] Processing message (length: ${message.length})`);
+    const tone = (payload.tone || "default") as "default" | "friendly" | "creative" | "technical";
+    const responseMode = (payload.responseMode || "auto") as "auto" | "fast" | "thinking";
 
-    const sessionId = getOrCreateSessionId();
+    console.log(`[api/chat] Processing message (length: ${message.length}, tone: ${tone}, mode: ${responseMode})`);
+
+    const sessionId = await getOrCreateSessionId();
     const clientId = payload.clientId ?? undefined;
 
     const { reply, conversationId } = await handleUserMessage({
@@ -77,6 +80,8 @@ export async function POST(request: Request) {
       channel: "WEB",
       message,
       conversationId: payload.conversationId ?? null,
+      tone,
+      responseMode,
     });
 
     const duration = Date.now() - startTime;
@@ -85,7 +90,7 @@ export async function POST(request: Request) {
     const response = NextResponse.json<ChatResponseBody>({ reply, conversationId });
 
     // Set session cookie if it doesn't exist
-    const cookieStore = cookies();
+    const cookieStore = await cookies();
     if (!cookieStore.get(SESSION_COOKIE_NAME)) {
       response.cookies.set(SESSION_COOKIE_NAME, sessionId, {
         httpOnly: true,
@@ -99,9 +104,14 @@ export async function POST(request: Request) {
   } catch (error) {
     const duration = Date.now() - startTime;
     const errorMessage = error instanceof Error ? error.message : "Unknown error";
+    const errorStack = error instanceof Error ? error.stack : undefined;
     console.error(`[api/chat] Request failed after ${duration}ms:`, errorMessage);
+    if (errorStack) {
+      console.error(`[api/chat] Error stack:`, errorStack);
+    }
+    console.error(`[api/chat] Full error:`, error);
     return NextResponse.json(
-      { error: "خطای داخلی سرور. لطفاً دوباره تلاش کنید." },
+      { error: "خطای داخلی سرور. لطفاً دوباره تلاش کنید.", details: process.env.NODE_ENV === "development" ? errorMessage : undefined },
       { status: 500 },
     );
   }

@@ -8,6 +8,8 @@ export interface ChatMessage {
 export interface GenerateCompletionParams {
   messages: ChatMessage[];
   model?: string;
+  temperature?: number;
+  maxTokens?: number;
 }
 
 export interface GenerateCompletionResult {

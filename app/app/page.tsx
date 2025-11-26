@@ -2,7 +2,7 @@
 
 import { FormEvent, useCallback, useEffect, useRef, useState } from "react";
 import styles from "./chat.module.css";
-import type { ChatRequestBody, ChatResponseBody } from "@/types/chat";
+import type { ChatRequestBody, ChatResponseBody, Tone, ResponseMode } from "@/types/chat";
 
 type ChatRole = "user" | "assistant";
 
@@ -51,6 +51,9 @@ export default function ChatPage() {
   const [isSending, setIsSending] = useState(false);
   const [isLoadingHistory, setIsLoadingHistory] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
+  const [tone, setTone] = useState<Tone>("default");
+  const [responseMode, setResponseMode] = useState<ResponseMode>("auto");
   const messagesContainerRef = useRef<HTMLDivElement | null>(null);
   const scrollAnchorRef = useRef<HTMLDivElement | null>(null);
 
@@ -76,6 +79,18 @@ export default function ChatPage() {
     }
 
     setClientId(existing);
+
+    // Load settings from localStorage
+    if (typeof window !== "undefined") {
+      const savedTone = window.localStorage.getItem("ario_ai_tone") as Tone | null;
+      const savedResponseMode = window.localStorage.getItem("ario_ai_response_mode") as ResponseMode | null;
+      if (savedTone && ["default", "friendly", "creative", "technical"].includes(savedTone)) {
+        setTone(savedTone);
+      }
+      if (savedResponseMode && ["auto", "fast", "thinking"].includes(savedResponseMode)) {
+        setResponseMode(savedResponseMode);
+      }
+    }
   }, []);
 
   useEffect(() => {
@@ -114,6 +129,33 @@ export default function ChatPage() {
     setConversationId(null);
     setMessages([]);
     setError(null);
+  };
+
+  const handleToneChange = (newTone: Tone) => {
+    setTone(newTone);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("ario_ai_tone", newTone);
+    }
+  };
+
+  const handleResponseModeChange = (newMode: ResponseMode) => {
+    setResponseMode(newMode);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("ario_ai_response_mode", newMode);
+    }
+  };
+
+  const toneLabels: Record<Tone, string> = {
+    default: "حرفه‌ای",
+    friendly: "صمیمی",
+    creative: "خلاقانه",
+    technical: "فنی",
+  };
+
+  const responseModeLabels: Record<ResponseMode, string> = {
+    auto: "خودکار",
+    fast: "سریع",
+    thinking: "تفکر",
   };
 
   const handleSelectConversation = async (selectedConversationId: string) => {
@@ -185,6 +227,8 @@ export default function ChatPage() {
             message: trimmed,
             conversationId,
             clientId,
+            tone,
+            responseMode,
           } satisfies ChatRequestBody,
         ),
       });
@@ -252,6 +296,18 @@ export default function ChatPage() {
             </div>
             <div className={styles.headerActions}>
               {isLoadingHistory && <span className={styles.subtitle}>در حال بارگذاری...</span>}
+              <div className={styles.settingsIndicator}>
+                <span className={styles.settingsLabel}>{toneLabels[tone]}</span>
+                <span className={styles.settingsLabel}>{responseModeLabels[responseMode]}</span>
+              </div>
+              <button
+                type="button"
+                className={styles.settingsButton}
+                onClick={() => setShowSettings(!showSettings)}
+                aria-label="تنظیمات"
+              >
+                ⚙️
+              </button>
               <button
                 type="button"
                 className={styles.newChatButton}
@@ -262,6 +318,52 @@ export default function ChatPage() {
               </button>
             </div>
           </header>
+
+          {showSettings && (
+            <div className={styles.settingsPanel}>
+              <div className={styles.settingsSection}>
+                <label className={styles.settingsLabel}>تن صدا:</label>
+                <div className={styles.radioGroup}>
+                  {(["default", "friendly", "creative", "technical"] as Tone[]).map((t) => (
+                    <label key={t} className={styles.radioOption}>
+                      <input
+                        type="radio"
+                        name="tone"
+                        value={t}
+                        checked={tone === t}
+                        onChange={() => handleToneChange(t)}
+                      />
+                      <span>{toneLabels[t]}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <div className={styles.settingsSection}>
+                <label className={styles.settingsLabel}>حالت پاسخ:</label>
+                <div className={styles.radioGroup}>
+                  {(["auto", "fast", "thinking"] as ResponseMode[]).map((m) => (
+                    <label key={m} className={styles.radioOption}>
+                      <input
+                        type="radio"
+                        name="responseMode"
+                        value={m}
+                        checked={responseMode === m}
+                        onChange={() => handleResponseModeChange(m)}
+                      />
+                      <span>{responseModeLabels[m]}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+              <button
+                type="button"
+                className={styles.closeSettingsButton}
+                onClick={() => setShowSettings(false)}
+              >
+                بستن
+              </button>
+            </div>
+          )}
 
           <section
             className={styles.messages}

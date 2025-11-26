@@ -1,19 +1,22 @@
-import "@/config/init"; // Validate environment on import
 import type {
   GenerateCompletionParams,
   GenerateCompletionResult,
 } from "./types";
+import { getEnv } from "@/config/env";
 
 const OPENROUTER_API_URL = "https://openrouter.ai/api/v1/chat/completions";
-const DEFAULT_MODEL = "deepseek/deepseek-r1:free"; // Free tier model
+const DEFAULT_MODEL = "openai/gpt-4.1-mini"; // Default model per latest config
 
 export async function generateCompletion(
   params: GenerateCompletionParams,
 ): Promise<GenerateCompletionResult> {
-  const apiKey = process.env.OPENROUTER_API_KEY;
-
-  if (!apiKey) {
-    throw new Error("OPENROUTER_API_KEY is not configured");
+  // Validate environment lazily (only when actually calling the LLM)
+  let apiKey: string;
+  try {
+    const env = getEnv();
+    apiKey = env.OPENROUTER_API_KEY;
+  } catch (error) {
+    throw new Error("OPENROUTER_API_KEY is not configured. Please set it in your .env file.");
   }
 
   const model = params.model || DEFAULT_MODEL;
@@ -35,8 +38,8 @@ export async function generateCompletion(
       body: JSON.stringify({
         model,
         messages: params.messages,
-        temperature: 0.7,
-        max_tokens: 2000,
+        temperature: params.temperature ?? 0.7,
+        max_tokens: params.maxTokens ?? 2000,
       }),
     });
 
