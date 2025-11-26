@@ -151,10 +151,17 @@ export async function handleUserMessage(
       const { conversationId } = params;
 
       if (conversationId) {
-        const existing = await prisma.conversation.findUnique({
-          where: { id: conversationId },
+        const existing = await prisma.conversation.findFirst({
+          where: {
+            id: conversationId,
+            userId: user.id,
+          },
         });
         if (existing) return existing;
+
+        console.warn(
+          `[conversation] Conversation ${conversationId} not found or does not belong to user ${user.id}. Creating a new one.`,
+        );
       }
 
       return prisma.conversation.create({
